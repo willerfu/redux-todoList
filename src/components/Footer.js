@@ -1,15 +1,16 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react';
 
-export default class Footer extends Component {
+class Footer extends React.Component {
+  // 渲染条件Links
   renderFilter(filter, name) {
     if (filter === this.props.filter) {
-      return name
+      return name;
     }
 
     return (
       <a href='#' onClick={e => {
-        e.preventDefault()
-        this.props.onFilterChange(filter)
+        this.props.onFilterChange(filter);
+        e.preventDefault();
       }}>
         {name}
       </a>
@@ -18,20 +19,22 @@ export default class Footer extends Component {
 
   render() {
     return (
-      <p>
-        Show:
-        {' '}
-        {this.renderFilter('SHOW_ALL', 'All')}
-        {', '}
-        {this.renderFilter('SHOW_COMPLETED', 'Completed')}
-        {', '}
-        {this.renderFilter('SHOW_ACTIVE', 'Active')}
-        .
-      </p>
+      <div className='filter'>
+        <p>
+          展示 :
+          {' '}
+          {this.renderFilter('SHOW_ALL', '全部')}
+          {' | '}
+          {this.renderFilter('SHOW_COMPLETED', '已完成')}
+          {' | '}
+          {this.renderFilter('SHOW_ACTIVE', '未完成')}
+        </p>
+      </div>
     )
   }
 }
 
+// props 验证
 Footer.propTypes = {
   onFilterChange: PropTypes.func.isRequired,
   filter: PropTypes.oneOf([
@@ -40,3 +43,5 @@ Footer.propTypes = {
     'SHOW_ACTIVE'
   ]).isRequired
 }
+
+export default Footer;

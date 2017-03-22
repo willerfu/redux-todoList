@@ -6,6 +6,7 @@ import App from './containers/App';
 import todoApp from './reducers';
 import './style/index.css';
 
+// 获取store
 let store = createStore(todoApp);
 
 ReactDOM.render(

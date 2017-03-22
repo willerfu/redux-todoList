@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react';
 
-export default class Todo extends Component {
+class Todo extends React.Component {
   render() {
     return (
       <li
@@ -21,3 +21,5 @@ Todo.propTypes = {
   text: PropTypes.string.isRequired,
   completed: PropTypes.bool.isRequired
 }
+
+export default Todo;

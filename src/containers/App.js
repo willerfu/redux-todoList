@@ -1,30 +1,30 @@
-import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters } from '../actions'
-import AddTodo from '../components/AddTodo'
-import TodoList from '../components/TodoList'
-import Footer from '../components/Footer'
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters } from '../actions';
+import AddTodo from '../components/AddTodo';
+import TodoList from '../components/TodoList';
+import Footer from '../components/Footer';
+import '../style/App.css';
 
-class App extends Component {
+class App extends React.Component {
   render() {
-    // Injected by connect() call:
-    const { dispatch, visibleTodos, visibilityFilter } = this.props
+    // App 接收 state 映射后的对象obj中的属性和 dispatch 传递给子组件
+    const { dispatch, visibleTodos, visibilityFilter } = this.props;
     return (
-      <div>
-        // 添加组件
+      <div className='container'>
         <AddTodo
           onAddClick={text =>
             // 分发到添加待办事项 action
             dispatch(addTodo(text))
           } />
-        // 代办列表组件
+
         <TodoList
           todos={visibleTodos}
           onTodoClick={index =>
             // 分发到点击触发完成 action
             dispatch(completeTodo(index))
           } />
-        // 过滤筛选组件
+
         <Footer
           filter={visibilityFilter}
           onFilterChange={nextFilter =>
@@ -36,6 +36,7 @@ class App extends Component {
   }
 }
 
+// props 验证
 App.propTypes = {
   visibleTodos: PropTypes.arrayOf(PropTypes.shape({
     text: PropTypes.string.isRequired,
@@ -48,24 +49,32 @@ App.propTypes = {
   ]).isRequired
 }
 
-// 过滤显示待办项
-function selectTodos(todos, filter) {
+// 过滤匹配显示待办项
+const selectTodos = (todos, filter) => {
   switch (filter) {
     case VisibilityFilters.SHOW_ALL:
-      return todos
+      return todos;
     case VisibilityFilters.SHOW_COMPLETED:
-      return todos.filter(todo => todo.completed)
+    // js filter方法匹配 completed = true的todo 返回一个新数组
+      return todos.filter(todo => todo.completed);
     case VisibilityFilters.SHOW_ACTIVE:
-      return todos.filter(todo => !todo.completed)
+    // js filter方法过滤掉 completed = false的todo 返回一个新数组
+      return todos.filter(todo => !todo.completed);
   }
 }
 
-function select(state) {
+/**
+ * mapStateToProps 映射state
+ * 
+ * @param  state  [store里的state]
+ * @return object [返回一个对象，把对象里面的参数以属性传送给App，以及附带一个 dispatch]
+ */
+const select = (state) => {
   return {
     visibleTodos: selectTodos(state.todos, state.visibilityFilter),
     visibilityFilter: state.visibilityFilter
   }
 }
 
-// 包装 component ，注入 dispatch 和 state 到其默认的 connect(select)(App) 中；
-export default connect(select)(App)
+// 通过 connect(select)(App) 连接 store 和 App 容器组件。
+export default connect(select)(App);

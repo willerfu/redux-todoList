@@ -1,17 +1,19 @@
-import React, { Component, PropTypes } from 'react'
-import Todo from './Todo'
+import React, { PropTypes } from 'react';
+import Todo from './Todo';
 
-export default class TodoList extends Component {
+class TodoList extends React.Component {
   render() {
     return (
-      <ul>
-        {this.props.todos.map((todo, index) =>
-          <Todo
-            key={index}
-            {...todo}
-            todoClick={() => this.props.onTodoClick(index)} />
-        )}
-      </ul>
+      <div className='todo-list'>
+        <ul>
+          {this.props.todos.map((todo, index) =>
+            <Todo
+              key={index}
+              {...todo} // ES6 扩展运算符
+              todoClick={() => this.props.onTodoClick(index)} />
+          )}
+        </ul>
+      </div>
     )
   }
 }
@@ -24,3 +26,5 @@ TodoList.propTypes = {
     completed: PropTypes.bool.isRequired
   }).isRequired).isRequired
 }
+
+export default TodoList;

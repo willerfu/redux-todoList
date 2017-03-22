@@ -1,24 +1,37 @@
-.App {
-  text-align: center;
+.container {
+  width: 50%;
+  margin: 200px auto;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.todo-add input {
+  height: 25px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.todo-add button {
+  height: 30px;
+  font-weight: bold;
 }
 
-.App-intro {
-  font-size: large;
+.todo-list ul {
+  padding: 0;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.todo-list li {
+  margin-left: 41%;
+  list-style-type: circle;
+  font-size: 1.2rem;
+  line-height: 2rem;
+}
+
+.filter {
+  font-size: 1.3rem;
+}
+
+.todo-add,
+.filter {
+   text-align: center;
+}
+.filter a {
+   text-decoration: none;
+   color: #2b90d9;
 }
